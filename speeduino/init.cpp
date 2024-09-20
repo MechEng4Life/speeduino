@@ -875,12 +875,14 @@ void initialiseAll(void)
         //Paired injection
         fuelSchedule1.pStartFunction = openInjector1;
         fuelSchedule1.pEndFunction = closeInjector1;
+        #if INJ_CHANNELS >= 2
         fuelSchedule2.pStartFunction = openInjector2;
         fuelSchedule2.pEndFunction = closeInjector2;
         fuelSchedule3.pStartFunction = openInjector3;
         fuelSchedule3.pEndFunction = closeInjector3;
         fuelSchedule4.pStartFunction = openInjector4;
         fuelSchedule4.pEndFunction = closeInjector4;
+        #endif
 #if INJ_CHANNELS >= 5
         fuelSchedule5.pStartFunction = openInjector5;
         fuelSchedule5.pEndFunction = closeInjector5;
@@ -895,59 +897,71 @@ void initialiseAll(void)
           {
             fuelSchedule1.pStartFunction = openInjector1and3;
             fuelSchedule1.pEndFunction = closeInjector1and3;
+            #if INJ_CHANNELS >= 2
             fuelSchedule2.pStartFunction = openInjector2and4;
             fuelSchedule2.pEndFunction = closeInjector2and4;
+            #endif
           }
           else
           {
             fuelSchedule1.pStartFunction = openInjector1and4;
             fuelSchedule1.pEndFunction = closeInjector1and4;
+            #if INJ_CHANNELS >= 2
             fuelSchedule2.pStartFunction = openInjector2and3;
             fuelSchedule2.pEndFunction = closeInjector2and3;
+            #endif
           }
         }
         else if( configPage2.nCylinders == 5 ) //This is similar to the paired injection but uses five injector outputs instead of four
         {
           fuelSchedule1.pStartFunction = openInjector1;
           fuelSchedule1.pEndFunction = closeInjector1;
+          #if INJ_CHANNELS >= 2
           fuelSchedule2.pStartFunction = openInjector2;
           fuelSchedule2.pEndFunction = closeInjector2;
           fuelSchedule3.pStartFunction = openInjector3and5;
           fuelSchedule3.pEndFunction = closeInjector3and5;
           fuelSchedule4.pStartFunction = openInjector4;
           fuelSchedule4.pEndFunction = closeInjector4;
+          #endif
         }
         else if( configPage2.nCylinders == 6 )
         {
           fuelSchedule1.pStartFunction = openInjector1and4;
           fuelSchedule1.pEndFunction = closeInjector1and4;
+          #if INJ_CHANNELS >= 2
           fuelSchedule2.pStartFunction = openInjector2and5;
           fuelSchedule2.pEndFunction = closeInjector2and5;
           fuelSchedule3.pStartFunction = openInjector3and6;
           fuelSchedule3.pEndFunction = closeInjector3and6;
+          #endif
         }
         else if( configPage2.nCylinders == 8 )
         {
           fuelSchedule1.pStartFunction = openInjector1and5;
           fuelSchedule1.pEndFunction = closeInjector1and5;
+          #if INJ_CHANNELS >= 2
           fuelSchedule2.pStartFunction = openInjector2and6;
           fuelSchedule2.pEndFunction = closeInjector2and6;
           fuelSchedule3.pStartFunction = openInjector3and7;
           fuelSchedule3.pEndFunction = closeInjector3and7;
           fuelSchedule4.pStartFunction = openInjector4and8;
           fuelSchedule4.pEndFunction = closeInjector4and8;
+          #endif
         }
         else
         {
           //Fall back to paired injection
           fuelSchedule1.pStartFunction = openInjector1;
           fuelSchedule1.pEndFunction = closeInjector1;
+          #if INJ_CHANNELS >= 2
           fuelSchedule2.pStartFunction = openInjector2;
           fuelSchedule2.pEndFunction = closeInjector2;
           fuelSchedule3.pStartFunction = openInjector3;
           fuelSchedule3.pEndFunction = closeInjector3;
           fuelSchedule4.pStartFunction = openInjector4;
           fuelSchedule4.pEndFunction = closeInjector4;
+          #endif
 #if INJ_CHANNELS >= 5
           fuelSchedule5.pStartFunction = openInjector5;
           fuelSchedule5.pEndFunction = closeInjector5;
@@ -959,12 +973,14 @@ void initialiseAll(void)
         //Sequential injection
         fuelSchedule1.pStartFunction = openInjector1;
         fuelSchedule1.pEndFunction = closeInjector1;
+        #if INJ_CHANNELS >= 2
         fuelSchedule2.pStartFunction = openInjector2;
         fuelSchedule2.pEndFunction = closeInjector2;
         fuelSchedule3.pStartFunction = openInjector3;
         fuelSchedule3.pEndFunction = closeInjector3;
         fuelSchedule4.pStartFunction = openInjector4;
         fuelSchedule4.pEndFunction = closeInjector4;
+        #endif
 #if INJ_CHANNELS >= 5
         fuelSchedule5.pStartFunction = openInjector5;
         fuelSchedule5.pEndFunction = closeInjector5;
@@ -987,12 +1003,14 @@ void initialiseAll(void)
         //Paired injection
         fuelSchedule1.pStartFunction = openInjector1;
         fuelSchedule1.pEndFunction = closeInjector1;
+        #if INJ_CHANNELS >= 2
         fuelSchedule2.pStartFunction = openInjector2;
         fuelSchedule2.pEndFunction = closeInjector2;
         fuelSchedule3.pStartFunction = openInjector3;
         fuelSchedule3.pEndFunction = closeInjector3;
         fuelSchedule4.pStartFunction = openInjector4;
         fuelSchedule4.pEndFunction = closeInjector4;
+        #endif
 #if INJ_CHANNELS >= 5
         fuelSchedule5.pStartFunction = openInjector5;
         fuelSchedule5.pEndFunction = closeInjector5;
@@ -3619,9 +3637,11 @@ void initialiseTriggers(void)
 
 static inline bool isAnyFuelScheduleRunning(void) {
   return fuelSchedule1.Status==RUNNING
+  #if INJ_CHANNELS >= 2
       || fuelSchedule2.Status==RUNNING
       || fuelSchedule3.Status==RUNNING
       || fuelSchedule4.Status==RUNNING
+      #endif
 #if INJ_CHANNELS >= 5      
       || fuelSchedule5.Status==RUNNING
 #endif
@@ -3677,12 +3697,14 @@ void changeHalfToFullSync(void)
     
     fuelSchedule1.pStartFunction = openInjector1;
     fuelSchedule1.pEndFunction = closeInjector1;
+    #if INJ_CHANNELS >= 2
     fuelSchedule2.pStartFunction = openInjector2;
     fuelSchedule2.pEndFunction = closeInjector2;
     fuelSchedule3.pStartFunction = openInjector3;
     fuelSchedule3.pEndFunction = closeInjector3;
     fuelSchedule4.pStartFunction = openInjector4;
     fuelSchedule4.pEndFunction = closeInjector4;
+    #endif
 #if INJ_CHANNELS >= 5
     fuelSchedule5.pStartFunction = openInjector5;
     fuelSchedule5.pEndFunction = closeInjector5;
@@ -3779,15 +3801,19 @@ void changeFullToHalfSync(void)
         {
           fuelSchedule1.pStartFunction = openInjector1and3;
           fuelSchedule1.pEndFunction = closeInjector1and3;
+          #if INJ_CHANNELS >= 2
           fuelSchedule2.pStartFunction = openInjector2and4;
           fuelSchedule2.pEndFunction = closeInjector2and4;
+          #endif
         }
         else
         {
           fuelSchedule1.pStartFunction = openInjector1and4;
           fuelSchedule1.pEndFunction = closeInjector1and4;
+          #if INJ_CHANNELS >= 2
           fuelSchedule2.pStartFunction = openInjector2and3;
           fuelSchedule2.pEndFunction = closeInjector2and3;
+          #endif
         }
         maxInjOutputs = 2;
         break;
@@ -3795,22 +3821,26 @@ void changeFullToHalfSync(void)
       case 6:
         fuelSchedule1.pStartFunction = openInjector1and4;
         fuelSchedule1.pEndFunction = closeInjector1and4;
+        #if INJ_CHANNELS >= 2
         fuelSchedule2.pStartFunction = openInjector2and5;
         fuelSchedule2.pEndFunction = closeInjector2and5;
         fuelSchedule3.pStartFunction = openInjector3and6;
         fuelSchedule3.pEndFunction = closeInjector3and6;
+        #endif
         maxInjOutputs = 3;
         break;
 
       case 8:
         fuelSchedule1.pStartFunction = openInjector1and5;
         fuelSchedule1.pEndFunction = closeInjector1and5;
+        #if INJ_CHANNELS >= 2
         fuelSchedule2.pStartFunction = openInjector2and6;
         fuelSchedule2.pEndFunction = closeInjector2and6;
         fuelSchedule3.pStartFunction = openInjector3and7;
         fuelSchedule3.pEndFunction = closeInjector3and7;
         fuelSchedule4.pStartFunction = openInjector4and8;
         fuelSchedule4.pEndFunction = closeInjector4and8;
+        #endif
         maxInjOutputs = 4;
         break;
     }

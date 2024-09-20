@@ -325,9 +325,11 @@ void initialiseFan(void)
     if ( configPage2.fanEnable == 2 ) // PWM Fan control
     {
       #if defined(CORE_TEENSY)
-        fan_pwm_max_count = (uint16_t)(MICROS_PER_SEC / (32U * configPage6.fanFreq * 2U)); //Converts the frequency in Hz to the number of ticks (at 16uS) it takes to complete 1 cycle. Note that the frequency is divided by 2 coming from TS to allow for up to 512hz
+        fan_pwm_max_count = (uint16_t)(MICROS_PER_SEC / (32U * configPage6.fanFreq * 2U));
+      #elif defined(CORE_AVR)
+        fan_pwm_max_count = (uint16_t)(MICROS_PER_SEC / (16U * configPage6.fanFreq * 2U)); //Converts the frequency in Hz to the number of ticks (at 16uS) it takes to complete 1 cycle. Note that the frequency is divided by 2 coming from TS to allow for up to 512hz
       #endif
-      fan_pwm_value = 0;
+       fan_pwm_value = 0;
     }
   #endif
 }

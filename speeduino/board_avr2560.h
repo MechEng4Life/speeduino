@@ -47,7 +47,7 @@
   #if not defined(__AVR_ATmega2561__)
     #define USE_SERIAL3
   #endif
-
+  #define PWM_FAN_AVAILABLE
 /*
 ***********************************************************************************************************
 * Schedules
@@ -138,11 +138,15 @@ static inline void IGN8_TIMER_DISABLE(void) { TIMSK3 &= ~(1 << OCIE3B); } //Repl
   #define DISABLE_BOOST_TIMER() TIMSK1 &= ~(1 << OCIE1A)
   #define ENABLE_VVT_TIMER()    TIMSK1 |= (1 << OCIE1B)
   #define DISABLE_VVT_TIMER()   TIMSK1 &= ~(1 << OCIE1B)
+  #define ENABLE_FAN_TIMER()  TIMSK1 |= (1 << OCIE1C)
+  #define DISABLE_FAN_TIMER() TIMSK1 &= ~(1 << OCIE1C)
 
   #define BOOST_TIMER_COMPARE   OCR1A
   #define BOOST_TIMER_COUNTER   TCNT1
   #define VVT_TIMER_COMPARE     OCR1B
   #define VVT_TIMER_COUNTER     TCNT1
+  #define FAN_TIMER_COMPARE     OCR1C
+  #define FAN_TIMER_COUNTER     TCNT1
 
 /*
 ***********************************************************************************************************

@@ -367,7 +367,7 @@ void fuelSchedule1Interrupt() //Most ARM chips can simply call a function
     fuelScheduleISR(fuelSchedule1);
   }
 
-
+#if INJ_CHANNELS >= 2
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) //AVR chips use the ISR for this
 ISR(TIMER3_COMPB_vect) //cppcheck-suppress misra-c2012-8.2
 #else
@@ -376,8 +376,9 @@ void fuelSchedule2Interrupt() //Most ARM chips can simply call a function
   {
     fuelScheduleISR(fuelSchedule2);
   }
+#endif
 
-
+#if INJ_CHANNELS >= 3
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) //AVR chips use the ISR for this
 ISR(TIMER3_COMPC_vect) //cppcheck-suppress misra-c2012-8.2
 #else
@@ -386,8 +387,9 @@ void fuelSchedule3Interrupt() //Most ARM chips can simply call a function
   {
     fuelScheduleISR(fuelSchedule3);
   }
+#endif
 
-
+#if INJ_CHANNELS >= 4
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) //AVR chips use the ISR for this
 ISR(TIMER4_COMPB_vect) //cppcheck-suppress misra-c2012-8.2
 #else
@@ -396,7 +398,7 @@ void fuelSchedule4Interrupt() //Most ARM chips can simply call a function
   {
     fuelScheduleISR(fuelSchedule4);
   }
-
+#endif
 #if INJ_CHANNELS >= 5
 #if defined(CORE_AVR) //AVR chips use the ISR for this
 ISR(TIMER4_COMPC_vect) //cppcheck-suppress misra-c2012-8.2
@@ -576,13 +578,19 @@ void disablePendingFuelSchedule(byte channel)
       if(fuelSchedule1.Status == PENDING) { fuelSchedule1.Status = OFF; }
       break;
     case 1:
+#if (INJ_CHANNELS >= 2)
       if(fuelSchedule2.Status == PENDING) { fuelSchedule2.Status = OFF; }
+#endif
       break;
     case 2: 
+#if (INJ_CHANNELS >= 3)
       if(fuelSchedule3.Status == PENDING) { fuelSchedule3.Status = OFF; }
+#endif
       break;
     case 3:
+#if (INJ_CHANNELS >= 4)
       if(fuelSchedule4.Status == PENDING) { fuelSchedule4.Status = OFF; }
+#endif
       break;
     case 4:
 #if (INJ_CHANNELS >= 5)

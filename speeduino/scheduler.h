@@ -213,9 +213,11 @@ inline __attribute__((always_inline)) void setFuelSchedule(FuelSchedule &schedul
 }
 
 extern FuelSchedule fuelSchedule1;
+#if INJ_CHANNELS >= 2
 extern FuelSchedule fuelSchedule2;
 extern FuelSchedule fuelSchedule3;
 extern FuelSchedule fuelSchedule4;
+#endif
 #if INJ_CHANNELS >= 5
 extern FuelSchedule fuelSchedule5;
 #endif
