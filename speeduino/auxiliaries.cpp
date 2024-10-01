@@ -51,7 +51,7 @@ volatile PINMASK_TYPE fan_pin_mask;
 volatile bool fan_pwm_state;
 uint16_t fan_pwm_max_count; //Used for variable PWM frequency
 volatile unsigned int fan_pwm_cur_value;
-long fan_pwm_value;
+static long fan_pwm_value;
 #endif
 
 bool acIsEnabled;
@@ -1261,19 +1261,23 @@ void boostDisable(void)
 }
 
 #if defined(PWM_FAN_AVAILABLE)
+#if defined(CORE_AVR)
+  ISR(TIMER1_COMPC_vect) //cppcheck-suppress misra-c2012-8.2
+#else
+  void fanInterrupt(void) //Most ARM chips can simply call a function
+#endif
 //The interrupt to control the FAN PWM. Mega2560 doesn't have enough timers, so this is only for the ARM chip ones
-  void fanInterrupt(void)
 {
   if (fan_pwm_state == true)
   {
     FAN_OFF();
-    FAN_TIMER_COMPARE = FAN_TIMER_COUNTER + (fan_pwm_max_count - fan_pwm_cur_value);
+    SET_COMPARE(FAN_TIMER_COMPARE, FAN_TIMER_COUNTER + (fan_pwm_max_count - fan_pwm_cur_value));
     fan_pwm_state = false;
   }
   else
   {
     FAN_ON();
-    FAN_TIMER_COMPARE = FAN_TIMER_COUNTER + fan_pwm_value;
+    SET_COMPARE(FAN_TIMER_COMPARE, FAN_TIMER_COUNTER + fan_pwm_value);
     fan_pwm_cur_value = fan_pwm_value;
     fan_pwm_state = true;
   }

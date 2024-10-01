@@ -840,7 +840,8 @@ void disableIdle(void)
 }
 
 #if defined(CORE_AVR) //AVR chips use the ISR for this
-ISR(TIMER1_COMPC_vect) //cppcheck-suppress misra-c2012-8.2
+ISR(TIMER2_COMPC_vect) //cppcheck-suppress misra-c2012-8.2
+
 #else
 void idleInterrupt(void) //Most ARM chips can simply call a function
 #endif
