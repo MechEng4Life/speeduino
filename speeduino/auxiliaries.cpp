@@ -51,7 +51,7 @@ volatile PINMASK_TYPE fan_pin_mask;
 volatile bool fan_pwm_state;
 uint16_t fan_pwm_max_count; //Used for variable PWM frequency
 volatile unsigned int fan_pwm_cur_value;
-long fan_pwm_value;
+static long fan_pwm_value;
 #endif
 
 bool acIsEnabled;
